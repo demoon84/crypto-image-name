@@ -3,9 +3,9 @@ const cryptoRun = require('./src/crypto-run');
 class CryptoName {
 	constructor(config) {
 		this.$config = {
-			secretKey: 'kyungtae',
 			entry: './dist',
-			output: './dist_crypto',
+			output: './dist-crypto',
+			secretKey: 'mkt',
 			...config
 		};
 	}
