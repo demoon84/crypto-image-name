@@ -1,6 +1,6 @@
 {
   "name": "crypto-image-name",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "crypto image name",
   "main": "index.js",
   "scripts": {

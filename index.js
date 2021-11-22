@@ -17,7 +17,7 @@ class CryptoName {
 				entry: this.$config.entry,
 				output: this.$config.output,
 				privateKey: this.$config.privateKey,
-				exclude: this.$config.exclude
+				excludePattern: this.$config.exclude
 			});
 		});
 	}
