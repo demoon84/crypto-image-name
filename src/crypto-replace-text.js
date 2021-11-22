@@ -3,12 +3,12 @@ const hmac = require('crypto-js/hmac-sha1');
 const replace = require('replace-in-file');
 const getPathList = require('./get-path-list');
 
-const makeReplaceOptions = (textList, secretKey) => {
+const makeReplaceOptions = (textList, privateKey) => {
 	const replaceOptions = {
 		files: [],
 		from: [],
 		to: (...args) => {
-			return `${args[0].split('/')[0]}/${hmac(args[0].split('.')[0], secretKey).toString()}.${args[0].split('.')[1]}`;
+			return `${args[0].split('/')[0]}/${hmac(args[0].split('.')[0], privateKey).toString()}.${args[0].split('.')[1]}`;
 		},
 		countMatches: true
 	};
@@ -20,8 +20,8 @@ const makeReplaceOptions = (textList, secretKey) => {
 	return replaceOptions;
 };
 
-const cryptoReplaceText = (entryPath, outputPath, files, textList, secretKey) => {
-	const replaceOptions = makeReplaceOptions(textList, secretKey);
+const cryptoReplaceText = (entryPath, outputPath, files, textList, privateKey) => {
+	const replaceOptions = makeReplaceOptions(textList, privateKey);
 
 	files.forEach((path) => {
 		const {fileName, renameSrc, renameDist} = getPathList(entryPath, outputPath, path);

@@ -4,13 +4,13 @@ const hmac = require('crypto-js/hmac-sha1');
 
 const getPathList = require('./get-path-list');
 
-const cryptoImageName = (entryPath, outputPath, images, secretKey) => {
+const cryptoImageName = (entryPath, outputPath, images, privateKey) => {
 	images.forEach((path) => {
 		const {folderName, fileName, renameSrc, renameDist} = getPathList(entryPath, outputPath, path);
 
 		const newName = rename(fileName, function() {
 			return {
-				basename: hmac(`${folderName}/${fileName.replace(`.${fileName.split('.')[1]}`, '')}`, secretKey).toString()
+				basename: hmac(`${folderName}/${fileName.replace(`.${fileName.split('.')[1]}`, '')}`, privateKey).toString()
 			};
 		});
 

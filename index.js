@@ -5,7 +5,8 @@ class CryptoName {
 		this.$config = {
 			entry: './dist',
 			output: './dist-crypto',
-			secretKey: 'mkt',
+			privateKey: 'mkt',
+			exclude: '',
 			...config
 		};
 	}
@@ -15,7 +16,8 @@ class CryptoName {
 			cryptoRun({
 				entry: this.$config.entry,
 				output: this.$config.output,
-				secretKey: this.$config.secretKey
+				privateKey: this.$config.privateKey,
+				exclude: this.$config.exclude
 			});
 		});
 	}

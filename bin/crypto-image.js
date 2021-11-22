@@ -1,11 +1,38 @@
 #!/usr/bin/env node
 
 const cryptoRun = require('../src/crypto-run');
+const inquirer = require('inquirer');
 
-cryptoRun({
-	entry: process.argv[2] || './dist',
-	output: process.argv[3] || './dist-crypto',
-	secretKey: process.argv[4] || 'mkt'
+const questions = [
+	{
+		type: 'input',
+		name: 'entry',
+		message: 'entry path',
+		default: './dist'
+	},
+	{
+		type: 'input',
+		name: 'output',
+		message: 'dist path',
+		default: './dist-crypto'
+	},
+	{
+		type: 'input',
+		name: 'privateKey',
+		message: 'private key',
+		default: 'mkt'
+	},
+	{
+		type: 'input',
+		name: 'excludePattern',
+		message: 'exclude pattern'
+	}
+];
+
+inquirer.prompt(questions).then((answers) => {
+	cryptoRun({
+		...answers
+	});
 });
 
-console.log('finish crypto image');
+
