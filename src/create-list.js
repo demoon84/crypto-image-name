@@ -23,7 +23,7 @@ const createList = (srcList) => {
 			return;
 		}
 
-		if ((/\.(jpg|png|jpge|gif|)$/.test(ext))) {
+		if ((/\.(jpg|png|jpge|gif|webp)$/.test(ext))) {
 			cryptoText(src);
 			cryptoList.images.push(src);
 		}
