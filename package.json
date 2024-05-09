@@ -1,6 +1,6 @@
 {
   "name": "crypto-image-name",
-  "version": "0.0.5",
+  "version": "0.0.1",
   "description": "crypto image name",
   "main": "index.js",
   "scripts": {
@@ -9,8 +9,6 @@
   "bin": {
     "cryptoimage": "bin/crypto-image.js"
   },
-  "author": "문경태(kyung tae Moon)",
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/demoon84/crypto-image-name.git"
@@ -21,5 +19,13 @@
     "inquirer": "^8.2.0",
     "rename": "^1.0.4",
     "replace-in-file": "^6.3.2"
-  }
+  },
+  "keywords": [
+    "crypto",
+    "image",
+    "filename"
+  ],
+  "email": "demoon84@gmail.com",
+  "author": "문경태(kyung tae Moon)",
+  "license": "MIT"
 }
