@@ -43,4 +43,3 @@ plugins:[
 | outputPath | './dist-crypto' | | 
 | privateKey | 'mkt' | |
 | exclude |  | exclude pattern(regx) |
-
