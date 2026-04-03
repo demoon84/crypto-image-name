@@ -1,0 +1,6 @@
+.hero {
+	background-image: image-set(
+		url("images/logo.main.png.webp") type("image/webp"),
+		url("images/logo.main.png") type("image/png")
+	);
+}

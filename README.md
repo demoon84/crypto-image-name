@@ -1,45 +1,108 @@
-# crypto image name
+# crypto-image-name
 
-> Change the image name inside the entry folder using crypto hash. <br>
-> When changing the image name, the image path written in the files(css, js, html, txt, vue, jsx) inside the folder is also changed.
+Rename image files with an HMAC-based hash and rewrite matching asset paths inside text files.
 
-## use as cli
+This package is focused on CLI and automation use.
 
-#### install
+## What It Changes
 
-``` bash
-$ npm install -g crypto-image-name
+- Image files are renamed to hashed filenames.
+- References to those images are rewritten inside supported text files.
+- Excluded files are copied without rewriting.
+
+## Supported Files
+
+### Images
+
+- `.jpg`
+- `.jpeg`
+- `.png`
+- `.gif`
+- `.webp`
+
+### Text Files
+
+- `.css`
+- `.js`
+- `.html`
+- `.txt`
+- `.vue`
+- `.jsx`
+
+## CLI
+
+### Install
+
+```bash
+npm install -g crypto-image-name
 ```
 
-#### use
-``` bash
-$ cryptoimage
+### Interactive Mode
+
+Run with no arguments to use prompts:
+
+```bash
+cryptoimage
 ```
 
-<br>
+### Non-Interactive Mode
 
-## use as webpack plugin
+Run with explicit arguments for scripts, CI, or AI agents:
 
-#### install
-``` bash
-$ npm install -D crypto-image-name
+```bash
+cryptoimage --entry ./dist --output ./dist-crypto --private-key my-key
 ```
 
-#### use
-```javascript
-// webpack.config.js
-const cryptoImageName = require('crypto-image-name');
+### JSON Output
 
-plugins:[
-	new cryptoImageName()
-]
+Use `--json` to print a machine-readable result:
+
+```bash
+cryptoimage --entry ./dist --output ./dist-crypto --json
 ```
 
-#### options
+Example response:
 
-| Name |  Default | description |
+```json
+{
+  "message": "finish crypto image",
+  "entry": "./dist",
+  "output": "./dist-crypto",
+  "processedFileCount": 12,
+  "excludedFileCount": 1,
+  "imageCount": 4,
+  "textFileCount": 8,
+  "replacementCount": 11
+}
+```
+
+### CLI Options
+
+| Option | Default | Description |
 | ----- | ----- | ----- |
-| entryPath | './dist' | |
-| outputPath | './dist-crypto' | | 
-| privateKey | 'mkt' | |
-| exclude |  | exclude pattern(regx) |
+| `-e`, `--entry`, `--entry-path` | `./dist` | input directory |
+| `-o`, `--output`, `--output-path` | `./dist-crypto` | output directory |
+| `-k`, `--private-key` | `mkt` | HMAC private key |
+| `-x`, `--exclude` |  | exclude file path regex |
+| `--json` | `false` | print structured JSON output |
+| `-h`, `--help` | `false` | show help |
+
+### Notes
+
+- The output path must be different from the entry path.
+- If no CLI arguments are given, the command falls back to interactive prompts.
+
+## Programmatic Use
+
+The package default export is the same runner used by the CLI:
+
+```javascript
+const cryptoRun = require('crypto-image-name');
+
+cryptoRun({
+	entry: './dist',
+	output: './dist-crypto',
+	privateKey: 'mkt',
+	excludePattern: 'keep\\.png$'
+});
+```

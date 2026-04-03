@@ -3,13 +3,13 @@ const fs = require('fs');
 const findChangeList = (entryPath) => {
 	const findList = [];
 
-	const readFolder = (path) => {
-		const items = fs.readdirSync(path);
+	const readFolder = (currentPath) => {
+		const items = fs.readdirSync(currentPath).sort();
 
 		items.forEach((item) => {
-			const nowSrc = path + '/' + item;
+			const nowSrc = `${currentPath}/${item}`;
 
-			if (fs.lstatSync(path + '/' + item).isDirectory()) {
+			if (fs.lstatSync(nowSrc).isDirectory()) {
 				readFolder(nowSrc);
 			}
 			else {
@@ -28,7 +28,7 @@ const findFiles = (path, excludePattern) => {
 
 	if (excludePattern) {
 		const regex = new RegExp(excludePattern, 'g');
-		const excludeList = changeList.filter(path => path.match(regex));
+		const excludeList = changeList.filter((item) => item.match(regex));
 
 		return {
 			change: changeList.filter(item => excludeList.indexOf(item) < 0),

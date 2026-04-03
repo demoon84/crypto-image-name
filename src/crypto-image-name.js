@@ -1,20 +1,27 @@
 const fs = require('fs-extra');
-const rename = require('rename');
-const hmac = require('crypto-js/hmac-sha1');
 
 const getPathList = require('./get-path-list');
+const {createCryptoFileName, getAssetReference} = require('./create-crypto-path');
 
-const cryptoImageName = (entryPath, outputPath, images, privateKey) => {
-	images.forEach((path) => {
-		const {folderName, fileName, renameSrc, renameDist} = getPathList(entryPath, outputPath, path);
+const cryptoImageName = (entryPath, outputPath, images, options) => {
+	const {assetManifest, privateKey} = options;
 
-		const newName = rename(fileName, function() {
-			return {
-				basename: hmac(`${folderName}/${fileName.replace(`.${fileName.split('.')[1]}`, '')}`, privateKey).toString()
-			};
-		});
+	return images.map((imagePath) => {
+		const {folderName, fileName, renameSrc, renameDist} = getPathList(entryPath, outputPath, imagePath);
+		const assetReference = getAssetReference(folderName, fileName);
+		const hashedAssetPath = assetManifest.get(assetReference);
+		const newName = hashedAssetPath
+			? hashedAssetPath.slice(hashedAssetPath.lastIndexOf('/') + 1)
+			: createCryptoFileName(folderName, fileName, privateKey);
+		const outputFile = `${renameDist}/${newName}`;
 
-		fs.copy(renameSrc, `${renameDist}/${newName}`);
+		fs.copySync(renameSrc, outputFile);
+
+		return {
+			source: imagePath,
+			output: outputFile,
+			hashedName: newName
+		};
 	});
 };
 
