@@ -92,6 +92,27 @@ Example response:
 - The output path must be different from the entry path.
 - If no CLI arguments are given, the command falls back to interactive prompts.
 
+## Trusted Publishing
+
+This repository is configured for npm trusted publishing through GitHub Actions.
+
+Workflow file:
+
+- `.github/workflows/npm-publish.yml`
+
+Trigger:
+
+- push a tag that starts with `v`, for example `v2.0.1`
+
+Required npm trusted publisher settings for this package:
+
+- Provider: GitHub Actions
+- Organization or user: `demoon84`
+- Repository: `crypto-image-name`
+- Workflow filename: `npm-publish.yml`
+
+Once trusted publishing is enabled on npm, the workflow publishes with OIDC and does not need `NPM_TOKEN`.
+
 ## Programmatic Use
 
 The package default export is the same runner used by the CLI:
